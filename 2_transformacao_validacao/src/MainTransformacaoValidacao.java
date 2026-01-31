@@ -4,14 +4,30 @@ import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.util.*;
 
+/**
+ * Etapa 2 – Transformação e Validação dos dados.
+ *
+ * Responsável por:
+ * - Ler o consolidado de despesas gerado na etapa 1
+ * - Relacionar despesas com o cadastro oficial da ANS
+ * - Agregar valores por operadora (Razão Social + UF)
+ * - Calcular total, média trimestral e desvio padrão
+ * - Gerar arquivo CSV final ordenado por maior despesa
+ */
 public class MainTransformacaoValidacao {
 
+    /**
+     * Estrutura de agregação das despesas por operadora.
+     */
     static class Registro {
         String razaoSocial;
         String uf;
         List<Double> valores = new ArrayList<>();
     }
 
+    /**
+     * Estrutura de dados do cadastro de operadoras da ANS.
+     */
     static class CadastroANS {
         String registroANS;
         String razaoSocial;
@@ -20,12 +36,15 @@ public class MainTransformacaoValidacao {
 
     public static void main(String[] args) throws Exception {
 
+        // Entrada: consolidado de despesas (Etapa 1)
         String consolidadoPath =
                 "1_integracao_api/data/output/consolidado_despesas.csv";
 
+        // Entrada: cadastro oficial da ANS
         String cadastroPath =
                 "2_transformacao_validacao/data/raw/Relatorio_cadop.csv";
 
+        // Saída: despesas agregadas por operadora
         String outputPath =
                 "2_transformacao_validacao/data/output/despesas_agregadas.csv";
 
@@ -34,17 +53,17 @@ public class MainTransformacaoValidacao {
         Map<String, CadastroANS> cadastroMap = carregarCadastro(cadastroPath);
         Map<String, Registro> agregados = new HashMap<>();
 
+        // Leitura do consolidado de despesas
         try (BufferedReader reader = new BufferedReader(
                 new InputStreamReader(new FileInputStream(consolidadoPath), StandardCharsets.UTF_8))) {
 
-            reader.readLine();
+            reader.readLine(); // ignora header
 
             String linha;
             while ((linha = reader.readLine()) != null) {
 
                 String[] c = linha.split(";");
                 if (c.length < 5) continue;
-
 
                 String regANS = c[0].trim();
 
@@ -72,9 +91,13 @@ public class MainTransformacaoValidacao {
 
         List<String[]> saida = new ArrayList<>();
 
+        // Cálculo dos indicadores estatísticos
         for (Registro r : agregados.values()) {
 
-            double total = r.valores.stream().mapToDouble(Double::doubleValue).sum();
+            double total = r.valores.stream()
+                    .mapToDouble(Double::doubleValue)
+                    .sum();
+
             double media = total / r.valores.size();
 
             double variancia = 0;
@@ -82,6 +105,7 @@ public class MainTransformacaoValidacao {
                 variancia += Math.pow(v - media, 2);
             }
             variancia /= r.valores.size();
+
             double desvio = Math.sqrt(variancia);
 
             saida.add(new String[]{
@@ -93,7 +117,7 @@ public class MainTransformacaoValidacao {
             });
         }
 
-
+        // Ordenação por maior total de despesas
         saida.sort((a, b) ->
                 Double.compare(
                         Double.parseDouble(b[2]),
@@ -101,6 +125,7 @@ public class MainTransformacaoValidacao {
                 )
         );
 
+        // Escrita do CSV final
         try (BufferedWriter writer = new BufferedWriter(
                 new OutputStreamWriter(new FileOutputStream(outputPath), StandardCharsets.UTF_8))) {
 
@@ -116,6 +141,12 @@ public class MainTransformacaoValidacao {
         System.out.println("Etapa 2 finalizada com sucesso.");
     }
 
+    /**
+     * Carrega o cadastro oficial da ANS e indexa pelo Registro ANS.
+     *
+     * @param path caminho do arquivo Relatorio_cadop.csv
+     * @return mapa de Registro ANS para dados cadastrais
+     */
     private static Map<String, CadastroANS> carregarCadastro(String path) throws Exception {
 
         Map<String, CadastroANS> map = new HashMap<>();
@@ -123,9 +154,11 @@ public class MainTransformacaoValidacao {
         try (BufferedReader reader = new BufferedReader(
                 new InputStreamReader(new FileInputStream(path), StandardCharsets.UTF_8))) {
 
-            String[] header = reader.readLine().replace("\"", "").split(";");
-            Map<String, Integer> idx = new HashMap<>();
+            String[] header = reader.readLine()
+                    .replace("\"", "")
+                    .split(";");
 
+            Map<String, Integer> idx = new HashMap<>();
             for (int i = 0; i < header.length; i++) {
                 idx.put(header[i].trim().toUpperCase(), i);
             }
