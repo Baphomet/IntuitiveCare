@@ -4,7 +4,7 @@ import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.util.*;
 
-public class Main {
+public class MainIntegracaoApi {
 
     public static void main(String[] args) throws Exception {
 
