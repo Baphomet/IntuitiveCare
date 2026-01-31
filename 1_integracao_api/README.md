@@ -27,6 +27,7 @@ Os arquivos ZIP foram baixados, extraídos e os arquivos CSV resultantes foram a
 ---
 
 ## Estrutura do Projeto
+```
 1_integracao_api/
 ├── data/
 │ ├── raw/ # CSVs originais da ANS (1T2025, 2T2025, 3T2025)
@@ -34,7 +35,7 @@ Os arquivos ZIP foram baixados, extraídos e os arquivos CSV resultantes foram a
 ├── src/
 │ └── main/java/ # Código Java da etapa 1
 └── README.md
-
+```
 ---
 
 ## Como Executar a Etapa 1
