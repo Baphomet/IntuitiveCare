@@ -1,6 +1,6 @@
 SET GLOBAL local_infile = 1;
 
-LOAD DATA LOCAL INFILE 'data/Relatorio_cadop.csv'
+LOAD DATA LOCAL INFILE '3_banco_dados/data/Relatorio_cadop.csv'
 INTO TABLE operadoras
 FIELDS TERMINATED BY ';'
 ENCLOSED BY '"'
@@ -29,7 +29,7 @@ IGNORE 1 ROWS
     data_registro_ans
 );
 
-LOAD DATA LOCAL INFILE 'data/consolidado_despesas.csv'
+LOAD DATA LOCAL INFILE '3_banco_dados/data/consolidado_despesas.csv'
 INTO TABLE despesas_consolidadas
 FIELDS TERMINATED BY ';'
 LINES TERMINATED BY '\n'
@@ -42,7 +42,7 @@ IGNORE 1 ROWS
     valor_despesas
 );
 
-LOAD DATA LOCAL INFILE 'data/despesas_agregadas.csv'
+LOAD DATA LOCAL INFILE '3_banco_dados/data/despesas_agregadas.csv'
 INTO TABLE despesas_agregadas
 FIELDS TERMINATED BY ';'
 LINES TERMINATED BY '\n'
