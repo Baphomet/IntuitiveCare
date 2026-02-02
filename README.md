@@ -1,5 +1,7 @@
 # IntuitiveCare
 
+> O frontend deste projeto também pode ser visualizado em [https://intuitivecare-front.vercel.app/#/](https://intuitivecare-front.vercel.app/#/). Note que esta versão está sem integração com o backend, portanto, uma mensagem de erro será exibida ao tentar consultar os dados.
+
 ## Sumário
 1. [Introdução](#introdução)
 2. [Estrutura do Projeto](#estrutura-do-projeto)
@@ -89,6 +91,9 @@ Cada pasta contém seus próprios arquivos de código, dados e scripts necessár
 - Função: Fornece uma API para acesso aos dados e uma interface web para visualização.
 - Detalhes: Consulte o arquivo `README.md` dentro da pasta para mais informações.
 
+## Observações Adicionais
+- Uma coleção do Postman está disponível na pasta `backend/postman` para testar todas as rotas da API. Inclui exemplos de requisições e respostas esperadas.
+
 ## Seção de Prints
 Adicione aqui os prints do site para documentar as funcionalidades visuais:
 
@@ -101,5 +106,4 @@ Adicione aqui os prints do site para documentar as funcionalidades visuais:
 - **Detalhes da Operadora:**
   ![Detalhes da Operadora](./prints/detalhes_operadora.png)
 
-## Observações Adicionais
-- Uma coleção do Postman está disponível na pasta `backend/postman` para testar todas as rotas da API. Inclui exemplos de requisições e respostas esperadas.
+
