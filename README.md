@@ -95,7 +95,6 @@ Cada pasta contém seus próprios arquivos de código, dados e scripts necessár
 - Uma coleção do Postman está disponível na pasta `backend/postman` para testar todas as rotas da API. Inclui exemplos de requisições e respostas esperadas.
 
 ## Seção de Prints
-Adicione aqui os prints do site para documentar as funcionalidades visuais:
 
 - **Página Inicial:**
   ![Página Inicial](./prints/pagina_inicial.png)
